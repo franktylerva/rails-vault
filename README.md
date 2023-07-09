@@ -63,3 +63,9 @@ Install the rails-vault application.
 ```
 helm upgrade rails-vault ./helm --install
 ```
+
+Check the value injected into the Pod.
+```
+export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=rails-vault,app.kubernetes.io/instance=rails-vault" -o jsonpath="{.items[0].metadata.name}")
+kubectl exec -ti $POD_NAME -c rails-vault -- cat /vault/secrets/helloworld
+```
