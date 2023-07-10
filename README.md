@@ -1,7 +1,9 @@
 # rails-vault
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application demonstrates and approach to using Vault secrets to connect a Rails application to a Postgresql database.  Perform the following steps to install the example on your Kubernetes cluster choice.
+
+
+
 
 Install Postgres:
 ```
@@ -56,21 +58,30 @@ vault write auth/kubernetes/role/myapp \
 
 Add some values to the secret Vault namespace.
 ```
-vault kv put secret/helloworld username=foobaruser password=foobarbazpass
+vault kv put secret/books_database username=books password=secret
 ```
 
 Build the rails-vault container images.
 ```
+bundle install
+bundle exec rails assets:precompile
 docker build -t rails-vault:0.0.1 .
 ```
 
 Install the rails-vault application.
 ```
-helm upgrade rails-vault ./helm --install
+helm install rails-vault ./helm
 ```
 
 Check the value injected into the Pod.
 ```
 export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=rails-vault,app.kubernetes.io/instance=rails-vault" -o jsonpath="{.items[0].metadata.name}")
-kubectl exec -ti $POD_NAME -c rails-vault -- cat /vault/secrets/helloworld
+kubectl exec -ti $POD_NAME -c rails-vault -- cat /vault/secrets/books_database
 ```
+
+In a separate terminal, start a port forward:
+```
+kubectl port-forward deployment/rails-vault 3000:3000
+```
+
+Open http://localhost:3000 in a browser.
