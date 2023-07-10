@@ -81,4 +81,5 @@ test:
 #
 production:
   <<: *default
-  url: postgresql://books:secret@books-db-postgresql:5432/books
+  # url: postgresql://books:secret@books-db-postgresql:5432/books
+  url: <%= File.read("/vault/secrets/books_database") %>
