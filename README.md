@@ -3,6 +3,11 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
+Install Postgres:
+```
+helm install books-db oci://registry-1.docker.io/bitnamicharts/postgresql -f ./postgresql/values.yaml
+```
+
 Install Vault:
 ```
 helm upgrade vault hashicorp/vault -f ./vault/values.yaml --install

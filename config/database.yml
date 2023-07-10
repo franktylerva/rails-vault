@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  url: postgresql://books:secret@localhost:5432/books_api_development
+  url: postgresql://books:secret@localhost:5432/books
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -81,4 +81,4 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV["BOOKS_API_DATABASE_URL"] %>
+  url: postgresql://books:secret@books-db-postgresql:5432/books

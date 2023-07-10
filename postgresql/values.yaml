@@ -1,0 +1,7 @@
+image:
+  tag: 15.3.0-debian-11-r17
+
+auth:
+  username: books
+  password: secret
+  database: books
